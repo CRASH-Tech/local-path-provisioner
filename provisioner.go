@@ -588,7 +588,7 @@ func (p *LocalPathProvisioner) createHelperPod(action ActionType, cmd []string, 
 	}
 	o.Path = filepath.Clean(o.Path)
 	parentDir, volumeDir := filepath.Split(o.Path)
-	hostPathType := v1.HostPathDirectoryOrCreate
+	hostPathType := v1.HostPathDirectory
 	lpvVolumes := []v1.Volume{
 		{
 			Name: helperDataVolName,
@@ -838,7 +838,7 @@ func createPersistentVolumeSource(volumeType string, path string) (pvs v1.Persis
 			},
 		}
 	case "hostpath":
-		hostPathType := v1.HostPathDirectoryOrCreate
+		hostPathType := v1.HostPathDirectory
 		pvs = v1.PersistentVolumeSource{
 			HostPath: &v1.HostPathVolumeSource{
 				Path: path,
