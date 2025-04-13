@@ -92,7 +92,7 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}
 
-    # rancher/local-path-provisioner image
+    # crashntech/local-path-provisioner image
     - name: docker-publish
       if: ${{ startsWith(github.ref, 'refs/heads/') }}
       uses: docker/build-push-action@v5
@@ -100,7 +100,7 @@ jobs:
         context: ./
         push: true
         platforms: linux/amd64,linux/arm64,linux/arm,linux/riscv64
-        tags: rancher/local-path-provisioner:${{ env.branch }}-head
+        tags: crashntech/local-path-provisioner:${{ env.branch }}-head
         file: package/Dockerfile
 
     - name: docker-publish-with-tag
@@ -110,5 +110,5 @@ jobs:
         context: ./
         push: true
         platforms: linux/amd64,linux/arm64,linux/arm,linux/riscv64
-        tags: rancher/local-path-provisioner:${{ github.ref_name }}
+        tags: crashntech/local-path-provisioner:${{ github.ref_name }}
         file: package/Dockerfile
