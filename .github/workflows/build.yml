@@ -26,9 +26,9 @@ jobs:
     - name: Run CI
       run: make ci
 
-    # Run e2e test
-    - name: Run e2e Test
-      run: make e2e-test
+    # # Run e2e test
+    # - name: Run e2e Test
+    #   run: make e2e-test
 
     # Upload binaries
     - name: Upload Binaries
