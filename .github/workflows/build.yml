@@ -7,6 +7,10 @@ on:
     tags:
     - v*
   pull_request:
+
+env:
+  REGISTRY: "crashntech/${{ github.event.repository.name }}"
+
 jobs:
   build:
     name: Build Binaries
@@ -65,12 +69,13 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Read Secrets
-      uses: rancher-eio/read-vault-secrets@main
-      with:
-        secrets: |
-          secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials username | DOCKER_USERNAME ;
-          secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials password | DOCKER_PASSWORD
+    # - name: Read Secrets
+    #   uses: rancher-eio/read-vault-secrets@main
+    #   with:
+    #     secrets: |
+    #       secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials username | DOCKER_USERNAME ;
+    #       secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials password | DOCKER_PASSWORD
+
 
     - name: Get Branch Name
       run: |
@@ -80,6 +85,12 @@ jobs:
       with:
         username: ${{ env.DOCKER_USERNAME }}
         password: ${{ env.DOCKER_PASSWORD }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}
 
     # rancher/local-path-provisioner image
     - name: docker-publish
